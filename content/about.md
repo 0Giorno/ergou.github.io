@@ -28,6 +28,6 @@ Hi，我是 天才二狗君。
 ```yml
 - title: 二狗君のBlog
  link: https://ergou.github.io
- image: https://ergou.github.io/images/二狗君.png
+ image: /images/avatar.png
  intro: 这里是我的旷野
 ```

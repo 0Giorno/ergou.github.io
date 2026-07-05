@@ -29,15 +29,15 @@ params:
   fancybox: true
 
   # 浏览器标签页/收藏夹图标
-  favicon: /images/二狗君.png
+  favicon: /images/avatar.png
 
   sidebar:
     subtitle: "记录生活，留住美好"
-    emojiImage: /images/二狗君.png
+    emojiImage: /images/avatar.png
     avatar:
       enabled: true
       local: false
-      src: /images/二狗君.png
+      src: /images/avatar.png
 
   article:
     math: true

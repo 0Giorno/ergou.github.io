@@ -1,4 +1,4 @@
-baseurl: https://ergou.github.io/
+baseurl: /
 locale: zh-CN
 title: "二狗君のBlog"
 theme: hugo-theme-stack

@@ -1,0 +1,75 @@
+<div class="article-details">
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="{{ .RelPermalink }}">
+                {{- .Title -}}
+            </a>
+        </h2>
+	
+        {{- $inList := eq (.Scratch.Get "inList") true -}}
+        {{- $subtitle := "" -}}
+        {{- if $inList -}}
+            {{- with .Params.summary -}}
+                {{- $subtitle = . -}}
+            {{- end -}}
+            {{- if not $subtitle -}}
+                {{- with .Params.description -}}
+                    {{- $subtitle = . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- else -}}
+            {{- with .Params.description -}}
+                {{- $subtitle = . -}}
+            {{- end -}}
+        {{- end -}}
+
+        {{- with $subtitle -}}
+            <h3 class="article-subtitle">{{ . | plainify }}</h3>
+        {{- end -}}
+    </div>
+
+    {{ $isPhotography := eq .Section "photography" }}
+    {{ $isNotes := eq .Section "notes" }}
+    {{ $isPosts := eq .Section "posts" }}
+
+    {{ if $isNotes }}
+    <footer class="article-time">
+        {{ with .Params.author }}
+            <div class="article-time--author">
+                {{ partial "helper/icon" "user" }}
+                <span>{{ . }}</span>
+            </div>
+        {{ end }}
+        {{ if not .Date.IsZero }}
+            <div class="article-time--published">
+                {{ partial "helper/icon" "date" }}
+                <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+                    {{- .Date | time.Format (or .Site.Params.dateFormat.published "2006-01-02") -}}
+                </time>
+            </div>
+        {{ end }}
+    </footer>
+    {{ end }}
+
+    {{ if $isPosts }}
+    <footer class="article-time">
+        {{ if not .Date.IsZero }}
+            <div class="article-time--published">
+                {{ partial "helper/icon" "date" }}
+                <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+                    {{- .Date.Format "2006年01月02日" -}}
+                </time>
+            </div>
+            <div class="article-time--weekday">
+                <span>{{ .Date.Format "Monday" }}</span>
+            </div>
+        {{ end }}
+        {{ with .Params.location }}
+            <div class="article-time--locations">
+                {{ partial "helper/icon" "location" }}
+                <span>{{ . }}</span>
+            </div>
+        {{ end }}
+    </footer>
+    {{ end }}
+</div>

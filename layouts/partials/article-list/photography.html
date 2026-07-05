@@ -1,0 +1,73 @@
+{{- $image := partialCached "helper/image" (dict "Context" . "Type" "articleList") .RelPermalink "articleList" -}}
+{{- $coverParam := "" -}}
+{{- $coverRes := .Resources.GetMatch "__no_such_resource__" -}}
+
+{{- with .Params.cover -}}
+    {{- with .image -}}{{- $coverParam = . -}}{{- end -}}
+{{- end -}}
+
+{{- if not $coverParam -}}
+    {{- with .Params.image -}}{{- $coverParam = . -}}{{- end -}}
+{{- end -}}
+
+{{- /* If coverParam is a local path inside a page bundle, try to resolve it as a Page Resource */ -}}
+{{- if and $coverParam (not (or (hasPrefix $coverParam "http://") (hasPrefix $coverParam "https://") (hasPrefix $coverParam "//"))) -}}
+    {{- $coverRes = .Resources.GetMatch $coverParam -}}
+    {{- if not $coverRes -}}
+        {{- $coverRes = .Resources.GetMatch (printf "*%s*" $coverParam) -}}
+    {{- end -}}
+{{- end -}}
+
+{{- /* Fallback: first image in Page Resources (leaf/branch bundle) */ -}}
+{{- if not $coverRes -}}
+    {{- $imgs := .Resources.ByType "image" -}}
+    {{- if gt (len $imgs) 0 -}}
+        {{- $coverRes = index $imgs 0 -}}
+    {{- end -}}
+{{- end -}}
+
+{{- /* Smart Remote Image Processing */ -}}
+{{- if and (not hugo.IsServer) (not $coverRes) $coverParam -}}
+    {{- if or (hasPrefix $coverParam "http://") (hasPrefix $coverParam "https://") (hasPrefix $coverParam "//") -}}
+        {{- $remoteTry := try (resources.GetRemote $coverParam) -}}
+        {{- with $remoteTry.Err -}}
+            {{- warnf "Log: Failed to fetch remote image %s: %s" $coverParam . -}}
+        {{- else -}}
+            {{- with $remoteTry.Value -}}
+                {{- $coverRes = . -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+<article class="{{ if or $coverRes $coverParam }}has-image{{ end }}">
+    {{/* Mark this page as being rendered inside a list/card context */}}
+    {{ .Scratch.Set "inList" true }}
+    
+    {{ if $coverRes }}
+        <div class="article-image">
+            <a href="{{ .RelPermalink }}">
+                {{- /* Resize to 3:2 aspect ratio (800x533) */ -}}
+                {{- $thumb := $coverRes.Fill "800x533 webp" -}}
+                <img src="{{ $thumb.RelPermalink }}"
+                     width="{{ $thumb.Width }}"
+                     height="{{ $thumb.Height }}"
+                     alt="{{ .Title | plainify }}"
+                     loading="lazy">
+            </a>
+        </div>
+    {{ else if $coverParam }}
+        <div class="article-image">
+            <a href="{{ .RelPermalink }}">
+                {{- /* Static file - use directly */ -}}
+                <img src="{{ $coverParam | relURL }}"
+                     alt="{{ .Title | plainify }}"
+                     loading="lazy">
+            </a>
+        </div>
+    {{ end }}
+    
+    {{ partial "article/components/photography-details" . }}
+    
+    {{ .Scratch.Delete "inList" }}
+</article>

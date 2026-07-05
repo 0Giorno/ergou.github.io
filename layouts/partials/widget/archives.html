@@ -1,0 +1,121 @@
+{{- $query := first 1 (where .Context.Site.Pages "Layout" "==" "archives") -}}
+{{- $context := .Context -}}
+{{- $limit := default 5 .Params.limit -}}
+{{- if $query -}}
+    {{- $archivesPage := index $query 0 -}}
+    <section class="widget archives">
+        <div class="widget-icon">
+            {{ partial "helper/icon" "infinity" }}
+        </div>
+        <h2 class="widget-title section-title">
+            <a href="{{ $archivesPage.RelPermalink }}">
+                {{ T "widget.archives.title" }}
+            </a>
+        </h2>
+
+        {{ $currentSection := $context.Section }}
+        {{ $validSections := slice "posts" "notes" "photography" }}
+        
+        {{ if in $validSections $currentSection }}
+            {{ $sectionPage := $context.Site.GetPage "section" $currentSection }}
+            {{ $pages := where $context.Site.RegularPages "Section" "==" $currentSection }}
+            
+            {{ if $pages }}
+                <div class="widget-archive--list">
+                    <div class="archives-section">
+                        <div class="section-header">
+                            <a href="{{ $archivesPage.RelPermalink }}">
+                                <span class="section-name">{{ $sectionPage.Title }}</span>
+                                <span class="section-count">{{ len $pages }}</span>
+                            </a>
+                        </div>
+                        
+                        {{ $archives := $pages.GroupByDate "2006" }}
+                        
+                        <div class="archives-years">
+                            {{ range $index, $yearItem := first (add $limit 1) ($archives) }}
+                                {{- $id := lower (replace $yearItem.Key " " "-") -}}
+                                <div class="archives-year">
+                                    <a href="{{ $archivesPage.RelPermalink }}#{{ $id }}">
+                                        {{ if eq $index $limit }}
+                                            <span class="year">{{ T "widget.archives.more" }}</span>
+                                        {{ else }}
+                                            <span class="year">{{ .Key }}</span>
+                                            <span class="count">{{ len $yearItem.Pages }}</span>
+                                        {{ end }}
+                                    </a>
+                                    {{ if ne $index $limit }}
+                                        {{ $springCount := 0 }}
+                                        {{ $summerCount := 0 }}
+                                        {{ $fallCount := 0 }}
+                                        {{ $winterCount := 0 }}
+                                        {{ range $yearItem.Pages }}
+                                            {{ $month := .Date.Month }}
+                                            {{ if or (eq $month 3) (eq $month 4) (eq $month 5) }}
+                                                {{ $springCount = add $springCount 1 }}
+                                            {{ else if or (eq $month 6) (eq $month 7) (eq $month 8) }}
+                                                {{ $summerCount = add $summerCount 1 }}
+                                            {{ else if or (eq $month 9) (eq $month 10) (eq $month 11) }}
+                                                {{ $fallCount = add $fallCount 1 }}
+                                            {{ else }}
+                                                {{ $winterCount = add $winterCount 1 }}
+                                            {{ end }}
+                                        {{ end }}
+                                        
+                                        <div class="archives-seasons">
+                                            {{ if gt $springCount 0 }}
+                                                <div class="archives-season">
+                                                    <span class="season">春</span>
+                                                    <span class="count">{{ $springCount }}</span>
+                                                </div>
+                                            {{ end }}
+                                            {{ if gt $summerCount 0 }}
+                                                <div class="archives-season">
+                                                    <span class="season">夏</span>
+                                                    <span class="count">{{ $summerCount }}</span>
+                                                </div>
+                                            {{ end }}
+                                            {{ if gt $fallCount 0 }}
+                                                <div class="archives-season">
+                                                    <span class="season">秋</span>
+                                                    <span class="count">{{ $fallCount }}</span>
+                                                </div>
+                                            {{ end }}
+                                            {{ if gt $winterCount 0 }}
+                                                <div class="archives-season">
+                                                    <span class="season">冬</span>
+                                                    <span class="count">{{ $winterCount }}</span>
+                                                </div>
+                                            {{ end }}
+                                        </div>
+                                    {{ end }}
+                                </div>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+            {{ end }}
+        {{ else }}
+            {{ $pages := $context.Site.RegularPages }}
+            {{ $archives := $pages.GroupByDate "2006" }}
+            
+            <div class="widget-archive--list">
+                {{ range $index, $yearItem := first (add $limit 1) ($archives) }}
+                    {{- $id := lower (replace $yearItem.Key " " "-") -}}
+                    <div class="archives-year">
+                        <a href="{{ $archivesPage.RelPermalink }}#{{ $id }}">
+                            {{ if eq $index $limit }}
+                                <span class="year">{{ T "widget.archives.more" }}</span>
+                            {{ else }}
+                                <span class="year">{{ .Key }}</span>
+                                <span class="count">{{ len $yearItem.Pages }}</span>
+                            {{ end }}
+                        </a>
+                    </div>
+                {{ end }}
+            </div>
+        {{ end }}
+    </section>
+{{- else -}}
+    {{- warnf "Archives page not found. Create a page with layout: archives." -}}
+{{- end -}}

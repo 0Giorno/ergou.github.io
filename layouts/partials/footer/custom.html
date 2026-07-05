@@ -1,0 +1,32 @@
+{{/* Only load PaperMod-style home effects on the profile homepage */}}
+{{ if .IsHome }}
+  <script defer src="{{ "/js/custom/home-typewriter.js" | relURL }}"></script>
+  <script defer src="{{ "/js/custom/home-ripple.js" | relURL }}"></script>
+{{ end }}
+
+{{/* PaperMod-style image zoom (Fancybox) */}}
+{{ if .Site.Params.fancybox }}
+  <script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (!window.Fancybox) return;
+      window.Fancybox.bind('[data-fancybox]', {
+        hideScrollbar: true,
+        placeFocusBack: false,
+      });
+    });
+  </script>
+{{ end }}
+
+{{/* 不蒜子统计：仅在非本地预览时注入，避免本地测试污染/显示异常 */}}
+<script>
+  (function () {
+    var host = window.location && window.location.hostname;
+    var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '';
+    if (isLocal) return;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+    document.head.appendChild(s);
+  })();
+</script>

@@ -1,0 +1,65 @@
+/* ========== 字体样式 ========== */
+
+/* LXGW Bright 字体定义 */
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+  全局字体应用（覆盖 Stack 主题变量）
+
+  Stack 默认使用：
+  - --base-font-family（全站 UI & 正文基础）
+  - --article-font-family（文章正文）
+  - --code-font-family（代码/等宽）
+*/
+:root {
+  /* 补齐中文系统字体兜底，避免部分组件没继承 body 时出现中英混排断裂 */
+  --sys-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC",
+    "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+
+  /* 宋体/衬线正文优先（未安装就自动回退） */
+  --article-serif-font-family: "梦源宋体", "DreamSource Song", "DreamSource Serif",
+    "Source Han Serif SC", "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+
+  /* 当前方案：LXGW Bright（你已自托管 woff2） */
+  --base-font-family: "LXGW Bright", var(--sys-font-family);
+  /* 正文使用宋体风格，更适合长文阅读；UI 仍保持 LXGW Bright */
+  --article-font-family: var(--article-serif-font-family);
+
+  /* 全局正文行距（Stack 默认 1.85 偏松） */
+  --article-line-height: 1.85;
+
+  /* 代码字体建议保持等宽（LXGW Bright 非等宽，不适合 code） */
+  --code-font-family: ui-monospace, "JetBrains Mono", "Cascadia Mono", "SFMono-Regular",
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}

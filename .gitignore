@@ -1,0 +1,23 @@
+# Hugo
+/public/
+/resources/
+/.hugo_build.lock
+/backup/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+
+# 摄影集大图：以后新增的摄影原图放在 full/ 子目录下，不会被推送
+# 当前已使用的图片不受影响
+static/images/photography/full/
+static/images/raw/
+
+# 备用图库（未引用的大图）
+static/images/backup/

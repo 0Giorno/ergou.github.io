@@ -1,0 +1,61 @@
+{{ define "body-class" }}home-profile-page{{ end }}
+
+{{ define "left-sidebar" }}{{ end }}
+{{ define "right-sidebar" }}{{ end }}
+
+{{ define "main" }}
+    {{- $profile := .Site.Params.homepage.profile -}}
+    {{- $enabled := true -}}
+    {{- with $profile -}}
+        {{- with .enabled -}}
+            {{- $enabled = . -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- if and $profile $enabled -}}
+        {{- $bg := (default "/images/background.jpg" $profile.background) -}}
+        {{- $avatar := (default (default "" .Site.Params.sidebar.avatar.src) $profile.imageUrl) -}}
+        {{- $title := (default .Site.Title $profile.title) -}}
+        {{- $subtitle := (default .Site.Params.sidebar.subtitle $profile.subtitle) -}}
+        {{- $showSocial := (default true $profile.showSocial) -}}
+
+        <section class="profile" aria-label="Profile" style="--pm-bg: url('{{ $bg | safeURL }}');">
+            <div class="profile_inner">
+                {{- if $avatar -}}
+                    <img src="{{ $avatar | safeURL }}" width="120" height="120" loading="lazy" alt="Avatar">
+                {{- end -}}
+
+                <h1>{{ $title }}</h1>
+                {{- with $subtitle -}}
+                    <span>{{ . }}</span>
+                {{- end -}}
+
+                {{- with $profile.buttons -}}
+                    <div class="buttons">
+                        {{- range . -}}
+                            <a href="{{ .url | safeURL }}">{{ .name }}</a>
+                        {{- end -}}
+                    </div>
+                {{- end -}}
+
+                {{- if $showSocial -}}
+                    {{- with .Site.Menus.social -}}
+                        <div class="social-icons">
+                            {{- range . -}}
+                                <a href='{{ .URL }}'
+                                   {{ if eq (default true .Params.newTab) true }}target="_blank"{{ end }}
+                                   {{ with .Name }}title="{{ . }}"{{ end }}
+                                   rel="me">
+                                    {{- $icon := default "link" .Params.Icon -}}
+                                    {{- with $icon -}}
+                                        {{ partial "helper/icon" . }}
+                                    {{- end -}}
+                                </a>
+                            {{- end -}}
+                        </div>
+                    {{- end -}}
+                {{- end -}}
+            </div>
+        </section>
+    {{- end -}}
+{{ end }}

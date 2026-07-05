@@ -1,0 +1,28 @@
+/* ========================================
+ * 二狗君のBlog - 自定义样式
+ * 基于 Hugo Stack 主题
+ * ========================================
+ * 
+ * 模块化结构：
+ * - _layout.scss      : 布局和容器宽度
+ * - _typography.scss  : 字体定义
+ * - _article.scss     : 文章相关样式
+ * - _shortcodes.scss  : 短代码（Notice、Sidenote等）
+ * - _photography.scss : 摄影栏目
+ * - _comments.scss    : 评论区
+ * - _social.scss      : 社交图标
+ * - _homepage.scss    : PaperMod风格首页
+ * - _components.scss  : UI组件（滚动条等）
+ */
+
+/* 导入模块 */
+@import "modules/layout";
+@import "modules/typography";
+@import "modules/article";
+@import "modules/shortcodes";
+@import "modules/photography";
+@import "modules/comments";
+@import "modules/social";
+@import "modules/homepage";
+@import "modules/footer";
+@import "modules/components";

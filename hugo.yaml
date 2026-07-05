@@ -1,0 +1,146 @@
+baseurl: https://ergou.github.io/
+locale: zh-CN
+title: "二狗君のBlog"
+theme: hugo-theme-stack
+timeZone: Asia/Shanghai
+
+enableGitInfo: false
+enableEmoji: true
+enableRobotsTXT: true
+hasCJKLanguage: true
+
+pagination:
+  pagerSize: 5
+
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
+
+params:
+  mainSections:
+    - notes
+    - posts
+    - photography
+
+  rssFullContent: true
+
+  # PaperMod 风格：图片点击放大（fancybox）
+  fancybox: true
+
+  # 浏览器标签页/收藏夹图标
+  favicon: /images/二狗君.png
+
+  sidebar:
+    subtitle: "记录生活，留住美好"
+    emojiImage: /images/二狗君.png
+    avatar:
+      enabled: true
+      local: false
+      src: /images/二狗君.png
+
+  article:
+    math: true
+    toc: true
+    readingTime: true
+
+  comments:
+    enabled: true
+    provider: giscus
+
+    giscus:
+      repo: ergou/ergou.github.io
+      repoID: R_kgDOQO0zsQ
+      category: Announcements
+      categoryID: DIC_kwDOQO0zsc4CxdT7
+      mapping: pathname
+      strict: 0
+      lightTheme: light
+      darkTheme: dark
+      reactionsEnabled: 1
+      emitMetadata: 0
+      inputPosition: bottom
+      lang: zh-CN
+
+  widgets:
+    homepage:
+      - type: archives
+        params:
+          limit: 5
+    page:
+      - type: toc
+    archives:
+      - type: archives
+        params:
+          limit: 5
+
+  colorScheme:
+    toggle: true
+    default: auto
+
+  homepage:
+    profile:
+      enabled: true
+      title: "天才二狗君のBlog"
+      subtitle: "记录生活，留住美好"
+      imageUrl: "/images/二狗君.png"
+      background: "/images/cover-background.jpg"
+      showSocial: true
+      buttons:
+        - name: 生活记录
+          url: /posts/
+        - name: 读书笔记
+          url: /notes/
+        - name: 摄影集
+          url: /photography/
+
+menu:
+  main:
+    - identifier: posts
+      name: 生活记录
+      url: /posts/
+      weight: 10
+      params:
+        icon: pencil
+    - identifier: notes
+      name: 读书笔记
+      url: /notes/
+      weight: 20
+      params:
+        icon: book
+    - identifier: photography
+      name: 摄影集
+      url: /photography/
+      weight: 30
+      params:
+        icon: camera
+
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block:
+            - - \\[ 
+              - \\]
+            - - $$
+              - $$
+          inline:
+            - - \\( 
+              - \\)
+    renderer:
+      unsafe: true
+  tableOfContents:
+    endLevel: 3
+    ordered: false
+    startLevel: 1
+  highlight:
+    style: dracula
+    noClasses: true
+    codeFences: true
+    guessSyntax: true
+    lineNoStart: 1
+    lineNos: false
+    lineNumbersInTable: false
+    tabWidth: 4

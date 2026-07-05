@@ -1,0 +1,89 @@
+{{ define "body-class" }}template-archives{{ end }}
+
+{{ define "main" }}
+    {{ $validSections := slice "posts" "notes" "photography" }}
+    {{ $pages := where .Site.RegularPages "Section" "in" $validSections }}
+
+    {{ range $pages.GroupByDate "2006" }}
+    {{ $yearId := lower (replace .Key " " "-") }}
+    <div class="archives-group" id="{{ $yearId }}">
+        <h2 class="archives-date section-title"><a href="{{ $.RelPermalink }}#{{ $yearId }}">{{ .Key }}</a></h2>
+        
+        {{ $springPages := slice }}
+        {{ $summerPages := slice }}
+        {{ $fallPages := slice }}
+        {{ $winterPages := slice }}
+        {{ range .Pages }}
+            {{ $month := .Date.Month }}
+            {{ if or (eq $month 3) (eq $month 4) (eq $month 5) }}
+                {{ $springPages = $springPages | append . }}
+            {{ else if or (eq $month 6) (eq $month 7) (eq $month 8) }}
+                {{ $summerPages = $summerPages | append . }}
+            {{ else if or (eq $month 9) (eq $month 10) (eq $month 11) }}
+                {{ $fallPages = $fallPages | append . }}
+            {{ else }}
+                {{ $winterPages = $winterPages | append . }}
+            {{ end }}
+        {{ end }}
+        
+        {{ if or ($springPages) ($summerPages) ($fallPages) ($winterPages) }}
+            {{ if $springPages }}
+                {{ $seasonId := printf "%s-spring" $yearId }}
+                <div class="archives-season-group" id="{{ $seasonId }}">
+                    <h3 class="archives-season-title"><a href="{{ $.RelPermalink }}#{{ $seasonId }}">{{ .Key }} · 春</a></h3>
+                    <div class="article-list--compact">
+                        {{ range $springPages }}
+                            {{ partial "article-list/compact" . }}
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}
+            {{ if $summerPages }}
+                {{ $seasonId := printf "%s-summer" $yearId }}
+                <div class="archives-season-group" id="{{ $seasonId }}">
+                    <h3 class="archives-season-title"><a href="{{ $.RelPermalink }}#{{ $seasonId }}">{{ .Key }} · 夏</a></h3>
+                    <div class="article-list--compact">
+                        {{ range $summerPages }}
+                            {{ partial "article-list/compact" . }}
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}
+            {{ if $fallPages }}
+                {{ $seasonId := printf "%s-fall" $yearId }}
+                <div class="archives-season-group" id="{{ $seasonId }}">
+                    <h3 class="archives-season-title"><a href="{{ $.RelPermalink }}#{{ $seasonId }}">{{ .Key }} · 秋</a></h3>
+                    <div class="article-list--compact">
+                        {{ range $fallPages }}
+                            {{ partial "article-list/compact" . }}
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}
+            {{ if $winterPages }}
+                {{ $seasonId := printf "%s-winter" $yearId }}
+                <div class="archives-season-group" id="{{ $seasonId }}">
+                    <h3 class="archives-season-title"><a href="{{ $.RelPermalink }}#{{ $seasonId }}">{{ .Key }} · 冬</a></h3>
+                    <div class="article-list--compact">
+                        {{ range $winterPages }}
+                            {{ partial "article-list/compact" . }}
+                        {{ end }}
+                    </div>
+                </div>
+            {{ end }}
+        {{ else }}
+            <div class="article-list--compact">
+                {{ range .Pages }}
+                    {{ partial "article-list/compact" . }}
+                {{ end }}
+            </div>
+        {{ end }}
+    </div>
+    {{ end }}
+
+    {{ partialCached "footer/footer" . }}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "archives") }}
+{{ end }}

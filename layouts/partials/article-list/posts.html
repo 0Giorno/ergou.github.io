@@ -1,0 +1,25 @@
+{{ $image := partialCached "helper/image" (dict "Context" . "Type" "articleList") .RelPermalink "articleList" }}
+<article class="article-post-card {{ if $image.exists }}has-image{{ end }}">
+    {{ if $image.exists }}
+        <div class="article-image article-post-card__image">
+            <a href="{{ .RelPermalink }}">
+                {{ if $image.resource }}
+                    {{- $thumbnail := $image.resource.Fill "640x320" -}}
+                    <img src="{{ $thumbnail.RelPermalink }}"
+                         width="{{ $thumbnail.Width }}"
+                         height="{{ $thumbnail.Height }}"
+                         alt="{{ .Title | plainify }}"
+                         loading="lazy">
+                {{ else }}
+                    <img src="{{ $image.permalink }}"
+                         alt="{{ .Title | plainify }}"
+                         loading="lazy">
+                {{ end }}
+            </a>
+        </div>
+    {{ end }}
+
+    {{ .Scratch.Set "inList" true }}
+    {{ partial "article/components/details" . }}
+    {{ .Scratch.Delete "inList" }}
+</article>

@@ -1,0 +1,55 @@
+<div class="article-details">
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="{{ .RelPermalink }}">
+                {{- .Title -}}
+            </a>
+        </h2>
+	
+        {{- $inList := eq (.Scratch.Get "inList") true -}}
+        {{- $subtitle := "" -}}
+        {{- if $inList -}}
+            {{- with .Params.summary -}}
+                {{- $subtitle = . -}}
+            {{- end -}}
+        {{- else -}}
+            {{- with .Params.description -}}
+                {{- $subtitle = . -}}
+            {{- end -}}
+        {{- end -}}
+
+        {{- with $subtitle -}}
+            <h3 class="article-subtitle">{{ . | plainify }}</h3>
+        {{- end -}}
+    </div>
+
+    {{ $showDate := not .Date.IsZero }}
+    {{ $showLocations := .Params.locations }}
+    {{ $showFooter := or $showDate $showLocations }}
+    
+    {{ if $showFooter }}
+    <footer class="article-time">
+        {{ if $showDate }}
+            <div class="article-time--published">
+                {{ partial "helper/icon" "date" }}
+                <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+                    {{- .Date.Format "2006年01月" -}}
+                </time>
+            </div>
+        {{ end }}
+
+        {{ if $showLocations }}
+            <div class="article-time--locations">
+                {{ partial "helper/icon" "location" }}
+                <span>
+                    {{- if reflect.IsSlice .Params.locations -}}
+                        {{- index .Params.locations 0 -}}
+                    {{- else -}}
+                        {{- .Params.locations -}}
+                    {{- end -}}
+                </span>
+            </div>
+        {{ end }}
+    </footer>
+    {{ end }}
+</div>

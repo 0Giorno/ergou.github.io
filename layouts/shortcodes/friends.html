@@ -1,0 +1,127 @@
+<style type="text/css">
+    .friendurl {
+        text-decoration: none !important;
+        color: inherit;
+        box-shadow: none !important;
+    }
+    
+    .friends {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+    }
+    
+    .friend-skeleton {
+        width: calc(50% - 5px);
+        margin-bottom: 10px;
+    }
+    
+    .friend {
+        overflow: auto;
+        height: 100px;
+        border-radius: 5px;
+        background: var(--card-background);
+        border: 1px solid var(--card-separator-color);
+        box-shadow: var(--shadow-l1);
+        -webkit-transition: all ease-out 0.3s;
+        -moz-transition: all ease-out 0.3s;
+        -o-transition: all ease-out 0.3s;
+        transition: all ease-out 0.3s;
+        display: flex;
+        align-items: center;
+    }
+    
+    [data-scheme='dark'] .friend:hover {
+        background: var(--card-background-selected);
+    }
+    
+    .friend:hover {
+        background: var(--card-background-selected);
+        transition: transform .25s ease, background-color .25s ease;
+        transform: translateY(-2px) scale(1.02);
+    }
+    
+    .friend:hover .friend-avatar {
+        transition: 0.9s !important;
+        -webkit-transition: 0.9s !important;
+        -moz-transition: 0.9s !important;
+        -o-transition: 0.9s !important;
+        -ms-transition: 0.9s !important;
+        transform: rotate(360deg) !important;
+        -webkit-transform: rotate(360deg) !important;
+        -moz-transform: rotate(360deg) !important;
+        -o-transform: rotate(360deg) !important;
+        -ms-transform: rotate(360deg) !important;
+    }
+    
+    .friend-avatar {
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 50% !important;
+        padding: 2px;
+        margin: 20px 14px !important;
+        background-color: var(--card-background);
+        flex-shrink: 0;
+    }
+    
+    .friend-content {
+        flex: 1;
+        padding-right: 18px;
+    }
+    
+    .friend-name {
+        text-overflow: ellipsis;
+        font-size: 100%;
+        margin-bottom: 5px;
+        color: var(--card-text-color-main);
+        font-weight: bold;
+    }
+    
+    .friend-description {
+        text-overflow: ellipsis;
+        font-size: 70%;
+        color: var(--card-text-color-secondary);
+    }
+    
+    @media screen and (max-width: 600px) {
+        .friend-skeleton {
+            width: 100%;
+        }
+        
+        .friend-description {
+            display: none;
+        }
+        
+        .friend-avatar {
+            margin: 10px !important;
+        }
+        
+        .friend-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-right: 10px;
+        }
+        
+        .friend-name {
+            font-size: 18px;
+        }
+    }
+</style>
+
+<div class="friends">
+    {{ range .Site.Data.friends }}
+    <div class="friend-skeleton">
+        <a href="{{ .link }}" target="_blank" class="friendurl">
+            <div class="friend">
+                <img class="friend-avatar" src="{{ .image }}" alt="{{ .title }}" />
+                <div class="friend-content">
+                    <div class="friend-name">{{ .title }}</div>
+                    <div class="friend-description">{{ .intro }}</div>
+                </div>
+            </div>
+        </a>
+    </div>
+    {{ end }}
+</div>

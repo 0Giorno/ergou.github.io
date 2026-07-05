@@ -1,0 +1,35 @@
+{{ $image := partialCached "helper/image" (dict "Context" . "Type" "articleList") .RelPermalink "articleList" }}
+<article class="article-notes">
+    <div class="article-notes__main">
+        <a class="article-notes__cover" href="{{ .RelPermalink }}">
+            {{ if $image.exists }}
+                <img src="{{ $image.permalink }}" loading="lazy" alt="{{ .Title }}" />
+            {{ else }}
+                <span>{{ partial "helper/icon" "book-open" }}</span>
+            {{ end }}
+        </a>
+
+        <div class="article-notes__text">
+            <h2 class="article-title article-notes__title">
+                <a href="{{ .RelPermalink }}">{{- .Title -}}</a>
+                {{ with .Params.author }}
+                    <span class="article-notes__author">{{ . }}</span>
+                {{ end }}
+            </h2>
+            {{- with .Params.description -}}
+                <p class="article-notes__subtitle">{{ . | plainify }}</p>
+            {{- end -}}
+        </div>
+    </div>
+
+    <footer class="article-notes__meta">
+        {{ if not .Date.IsZero }}
+            <span class="article-notes__meta-item">
+                {{ partial "helper/icon" "date" }}
+                <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+                    {{- .Date.Format "2006年01月" -}}
+                </time>
+            </span>
+        {{ end }}
+    </footer>
+</article>

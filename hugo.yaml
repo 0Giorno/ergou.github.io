@@ -83,7 +83,7 @@ params:
       enabled: true
       title: "天才二狗君のBlog"
       subtitle: "记录生活，留住美好"
-      imageUrl: "/images/二狗君.png"
+      imageUrl: "/images/avatar.png"
       background: "/images/cover-background.jpg"
       showSocial: true
       buttons:

@@ -1,0 +1,349 @@
+/* ========== 摄影集全屏文章页样式 ========== */
+
+/* 顶部导航栏 */
+.photo-top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 40px;
+    background: var(--body-background);
+    border-bottom: 1px solid var(--card-separator-color, #e0e0e0);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.photo-top-nav__home {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--body-text-color);
+    text-decoration: none;
+    white-space: nowrap;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.photo-top-nav__home img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.photo-top-nav__home:hover {
+    color: var(--accent-color);
+}
+
+.photo-top-nav__links {
+    display: flex;
+    gap: 28px;
+    margin-left: auto;
+}
+
+.photo-top-nav__links a {
+    font-size: 1.6rem;
+    color: var(--body-text-color);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.photo-top-nav__links a:hover {
+    color: var(--accent-color);
+    background: rgba(47, 107, 255, 0.08);
+}
+
+/* 全宽封面图 + 标题 */
+.photo-fullscreen-header {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 1;
+    min-height: 250px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.photo-fullscreen-header__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0.2) 50%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+}
+
+.photo-fullscreen-header__title-wrap {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.photo-fullscreen-header__title {
+    text-align: left;
+    padding-bottom: 50px;
+    padding-left: 24px;
+    color: #fff;
+}
+
+.photo-fullscreen-header__eyebrow {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: 'Montserrat', 'Proxima Nova', 'Helvetica Neue', sans-serif;
+    letter-spacing: 0.2em;
+    color: #f0c040;
+    margin-bottom: 14px;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+.photo-fullscreen-header__title h1 {
+    font-size: 4.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.photo-fullscreen-header__title p {
+    font-size: 2rem;
+    font-weight: 400;
+    margin: 14px 0 0;
+    opacity: 0.9;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* 文章正文 */
+.photo-fullscreen-article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.photo-fullscreen-article .article-content {
+    font-size: 1.6rem;
+    line-height: 1.9;
+    color: var(--body-text-color);
+}
+
+.photo-fullscreen-article .article-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.photo-fullscreen-article .article-content h1,
+.photo-fullscreen-article .article-content h2,
+.photo-fullscreen-article .article-content h3,
+.photo-fullscreen-article .article-content h4,
+.photo-fullscreen-article .article-content h5,
+.photo-fullscreen-article .article-content h6 {
+    margin-top: 40px;
+    border-inline-start: none !important;
+    padding-inline-start: 0 !important;
+    margin-inline-start: 0 !important;
+}
+
+.photo-fullscreen-article .poem {
+    text-align: center;
+    line-height: 2.2;
+    font-size: 1.5rem;
+    color: var(--card-text-color-secondary);
+    margin: 30px 0;
+}
+
+/* 让 fullscreen 页面不需要左右边栏，容器占满宽度 */
+.photography-fullscreen .left-sidebar,
+.photography-fullscreen .right-sidebar {
+    display: none !important;
+}
+
+.photography-fullscreen .container.main-container {
+    display: block !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+.photography-fullscreen .main.full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    padding-top: 0 !important;
+    gap: 0 !important;
+}
+
+/* ========== 上一篇 / 下一篇导航卡片 ========== */
+.photo-nav-prevnext {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+    box-sizing: border-box;
+}
+
+.photo-nav-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.photo-nav-label {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--body-text-color);
+    padding-left: 4px;
+}
+
+.photo-nav-label--right {
+    text-align: right;
+    padding-right: 4px;
+    padding-left: 0;
+}
+
+.photo-nav-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: var(--card-background, #fff);
+}
+
+.photo-nav-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.photo-nav-card__cover {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background-size: cover;
+    background-position: center;
+}
+
+.photo-nav-card__info {
+    padding: 8px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.photo-nav-card__title {
+    font-size: 1.8rem;
+    color: var(--body-text-color);
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.photo-nav-card__desc {
+    font-size: 1.3rem;
+    color: var(--card-text-color-tertiary, #888);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .photo-nav-prevnext {
+        flex-direction: column;
+        gap: 24px;
+        padding: 24px 16px 40px;
+    }
+
+    .photo-nav-card__cover {
+        aspect-ratio: 16 / 9;
+    }
+
+    .photo-nav-label--right {
+        text-align: left;
+        padding-right: 0;
+        padding-left: 4px;
+    }
+}
+
+/* 隐藏 footer 上方的灰色横线 */
+.photography-fullscreen footer.site-footer:before {
+    display: none !important;
+}
+
+/* footer 居中 */
+.photography-fullscreen footer.site-footer {
+    text-align: center;
+    padding: 24px 24px 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 暗夜模式适配 */
+@media (prefers-color-scheme: dark) {
+    html[data-scheme="dark"] .photo-top-nav {
+        background: var(--body-background);
+        border-bottom-color: #333;
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .photo-top-nav {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .photo-top-nav__home {
+        font-size: 1.2rem;
+    }
+
+    .photo-top-nav__links {
+        gap: 12px;
+    }
+
+    .photo-top-nav__links a {
+        font-size: 1.1rem;
+        padding: 4px 8px;
+    }
+
+    .photo-fullscreen-header {
+        height: 45vh;
+        min-height: 300px;
+    }
+
+    .photo-fullscreen-header__title h1 {
+        font-size: 2rem;
+    }
+
+    .photo-fullscreen-header__title p {
+        font-size: 1.1rem;
+    }
+
+    .photo-fullscreen-article {
+        padding: 24px 16px;
+    }
+}

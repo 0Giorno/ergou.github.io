@@ -1,0 +1,110 @@
+/* ========== 读书笔记 & 生活记录 全屏文章页样式 ========== */
+
+/* 隐藏左右侧栏，容器占满宽度 */
+.notes-fullscreen .left-sidebar,
+.notes-fullscreen .right-sidebar,
+.posts-fullscreen .left-sidebar,
+.posts-fullscreen .right-sidebar {
+    display: none !important;
+}
+
+.notes-fullscreen .container.main-container,
+.posts-fullscreen .container.main-container {
+    display: block !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+.notes-fullscreen .main.full-width,
+.posts-fullscreen .main.full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    padding-top: 0 !important;
+    gap: 0 !important;
+    display: block !important;
+}
+
+/* 布局：左侧 Archives + 右侧正文 */
+.notes-fullscreen-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 30px 40px;
+    align-items: flex-start;
+}
+
+/* 左侧目录侧边栏 */
+.notes-fullscreen-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 60px;
+}
+
+/* 目录 widget 样式 */
+.notes-toc-widget {
+    background: var(--card-background, #fff);
+    border-radius: 8px;
+    padding: 20px;
+
+    .widget-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 16px;
+        color: var(--card-text-color-main, #333);
+    }
+
+    /* Hugo 生成的 TOC */
+    nav#TableOfContents ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+
+        ul {
+            padding-left: 16px;
+            margin: 4px 0;
+        }
+
+        li {
+            margin: 6px 0;
+        }
+
+        a {
+            display: block;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--card-text-color-secondary, #666);
+            text-decoration: none;
+            transition: color 0.2s;
+
+            &:hover {
+                color: var(--accent-color, #2f6bff);
+            }
+        }
+    }
+}
+
+/* 右侧文章正文 */
+.notes-fullscreen-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .notes-fullscreen-layout {
+        flex-direction: column;
+        padding: 20px 16px;
+        gap: 20px;
+    }
+
+    .notes-fullscreen-sidebar {
+        width: 100%;
+        position: static;
+    }
+}

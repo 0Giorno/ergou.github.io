@@ -13,6 +13,7 @@ comments: true
 description: "为什么选择它作为背景"
 summary: ""
 locations: ["洛阳", "河南"]
+layout: "fullscreen"
 cover:
     image: "/images/photography/luoyang-photo.jpg"
     alt: "我的旷野"

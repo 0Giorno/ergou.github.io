@@ -1,0 +1,58 @@
+{{ define "body-class" }}
+    article-page section-posts posts-fullscreen
+{{ end }}
+
+{{ define "left-sidebar" }}{{ end }}
+{{ define "right-sidebar" }}{{ end }}
+
+{{ define "main" }}
+    {{/* ========== 顶部导航栏 ========== */}}
+    <nav class="photo-top-nav" style="position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; width: 100% !important; z-index: 9999 !important;">
+        <a href="/" class="photo-top-nav__home">
+            <img src="/images/avatar.png" alt="Avatar">
+            <span>二狗君のBlog</span>
+        </a>
+        <div class="photo-top-nav__links">
+            <a href="/posts/">生活记录</a>
+            <a href="/notes/">读书笔记</a>
+            <a href="/photography/">摄影集</a>
+        </div>
+    </nav>
+    <div style="height: 48px;"></div>
+    {{/* 占位元素，补偿 fixed 导航栏高度 */}}
+
+    {{/* ========== 布局：左侧目录 + 右侧正文 ========== */}}
+    <div class="notes-fullscreen-layout">
+        {{/* 左侧：文章章节目录 */}}
+        <aside class="notes-fullscreen-sidebar">
+            <section class="widget notes-toc-widget">
+                <h2 class="widget-title section-title">目录</h2>
+                <nav class="toc-nav">
+                    {{ .TableOfContents }}
+                </nav>
+            </section>
+        </aside>
+
+        {{/* 右侧：文章正文 */}}
+        <div class="notes-fullscreen-content">
+            {{ partial "article/article.html" . }}
+
+            {{ partial "article/license.html" . }}
+
+            {{ if .Params.links }}
+                {{ partial "article/components/links" . }}
+            {{ end }}
+
+            {{ partial "article/components/related-content" . }}
+
+            {{ if not (eq .Params.comments false) }}
+                {{ partial "comments/include" . }}
+            {{ end }}
+        </div>
+    </div>
+
+    {{ partialCached "footer/footer" . }}
+
+    {{ partialCached "article/components/photoswipe" . }}
+    {{ partialCached "article/components/mermaid" . }}
+{{ end }}

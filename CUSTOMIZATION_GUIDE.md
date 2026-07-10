@@ -518,6 +518,44 @@ cover.jpg
 | `cover.image` | 摄影集卡片封面 |
 | `locations` | 卡片底部地点，支持列表 |
 
+### 5. 页面布局
+
+摄影集文章页面有两种布局可选：
+
+**布局一：全屏布局（默认推荐）**
+
+在 front matter 中添加：
+
+```yaml
+layout: "fullscreen"
+```
+
+效果：
+- 顶部有导航栏（头像 + 站名居中 + 三个子系统入口在右侧）
+- 封面图占满全宽，标题左对齐在图片底部
+- 正文居中 800px
+- 底部有上一篇 / 下一篇导航卡片
+- 去掉了左右侧栏、标签、评论、版权声明
+
+**布局二：经典布局（原设计保留）**
+
+不在 front matter 中写 `layout` 字段，或写 `layout: "single"`，则使用经典布局。
+
+效果：
+- 保留左侧栏（头像、菜单）和右侧栏
+- 文章标题在正文顶部
+- 底部有标签、评论、版权声明
+
+**模板文件：**
+
+| 布局 | 模板文件 |
+|---|---|
+| 全屏布局 | `layouts/photography/fullscreen.html` |
+| 经典布局 | `layouts/photography/single.html` |
+| 全屏样式 | `assets/scss/modules/_photo-fullscreen.scss` |
+
+当前所有摄影集文章都使用 `layout: "fullscreen"`。如果要切换回经典布局，删除文章 front matter 中的 `layout: "fullscreen"` 行即可。
+
 ---
 
 ## 六、本地预览
